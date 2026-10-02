@@ -34,7 +34,7 @@ export default function Home() {
         </div>
         <div className="hero-visual">
           <div className="photo-frame"><Image src="/images/julia-garden-enhanced.webp" alt={site.hero.imageAlt} width={1254} height={1254} priority sizes="(max-width: 767px) 92vw, 44vw" quality={80} /></div>
-          <div className="photo-caption"><span className="caption-mark" aria-hidden="true">✳</span><span className="caption-copy">{site.hero.captionLines.map(line => <span key={line}>{line}</span>)}</span></div>
+          <div className="photo-caption"><span className="caption-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" focusable="false"><path d="M9 25c0-8 5-14 14-18"/><path d="M10 20C3 10 13 5 25 5c0 12-5 20-15 15Z"/></svg></span><span className="caption-copy">{site.hero.captionLines.map(line => <span key={line}>{line}</span>)}</span></div>
           <span className="photo-index" aria-hidden="true">ПРОСТРАНСТВО БЕРЕЖНЫХ ПЕРЕМЕН</span>
         </div>
       </section>

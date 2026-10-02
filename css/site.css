@@ -54,3 +54,6 @@ input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000p
  .caption-copy>span{display:block;white-space:nowrap}
  .caption-copy>span+span::before{content:none}
 }
+/* Vector leaf avoids platform-dependent emoji rendering on iOS. */
+.photo-caption .caption-mark{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;line-height:1;color:var(--green)}
+.caption-mark svg{display:block;width:28px;height:28px;overflow:visible}
