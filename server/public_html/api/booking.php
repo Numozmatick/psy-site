@@ -43,6 +43,15 @@ if (($config['enabled'] ?? false) !== true) respond(['ok' => true, 'demo' => tru
 foreach (['smtp_host','smtp_user','smtp_password','mail_from','mail_to'] as $key) {
     if (empty($config[$key])) respond(['error' => 'not_configured'], 503);
 }
+// Check installation before spending a submission attempt. No private paths exposed.
+foreach (['Exception.php', 'PHPMailer.php', 'SMTP.php'] as $library) {
+    if (!is_readable($private . '/phpmailer/' . $library)) {
+        respond(['error' => 'delivery', 'reason' => 'missing_mail_library'], 503);
+    }
+}
+if (!extension_loaded('openssl') || !function_exists('stream_socket_client') || !function_exists('ctype_alnum')) {
+    respond(['error' => 'delivery', 'reason' => 'missing_php_extension'], 503);
+}
 // One locked file shared by PHP requests, unlike process-local serverless counters.
 $storage = $private . '/storage';
 if (!is_dir($storage) && !mkdir($storage, 0700, true) && !is_dir($storage)) respond(['error' => 'storage'], 503);
