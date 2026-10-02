@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 15
     env:
       NEXT_TELEMETRY_DISABLED: '1'
-      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://psycholog.laht1nka.ru' }}
+      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://laht1nka.ru' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -52,7 +52,7 @@ jobs:
       BEGET_USER: ${{ secrets.BEGET_USER }}
       BEGET_PORT: ${{ vars.BEGET_PORT || '22' }}
       BEGET_SITE_DIR: ${{ secrets.BEGET_SITE_DIR }}
-      SITE_URL: ${{ vars.SITE_URL || 'https://psycholog.laht1nka.ru' }}
+      SITE_URL: ${{ vars.SITE_URL || 'https://laht1nka.ru' }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

@@ -23,7 +23,7 @@ trap restore ERR
 
 rsync -a --exclude='/mail-config.php' --exclude='/storage/' "$release/private/" "$site/private/"
 if [[ ! -f "$site/private/mail-config.php" ]]; then
-  cp -- "$site/private/mail-config.example.php" "$site/private/mail-config.php"
+  cp -- "$release/private/mail-config.php" "$site/private/mail-config.php"
   chmod 600 "$site/private/mail-config.php"
 fi
 if [[ ! -f "$site/public_html/site-config.js" ]]; then

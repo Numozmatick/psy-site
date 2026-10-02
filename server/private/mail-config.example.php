@@ -2,7 +2,7 @@
 // This file belongs NEXT TO public_html, never inside it. Edit on Beget only.
 return [
     'enabled' => false, // Change to true after setting the app password.
-    'site_url' => getenv('LAHTINKA_SITE_URL') ?: 'https://psycholog.laht1nka.ru', // Exact HTTPS origin; env override is for local QA.
+    'site_url' => getenv('LAHTINKA_SITE_URL') ?: 'https://laht1nka.ru', // Exact HTTPS origin; env override is for local QA.
     'smtp_host' => 'smtp.yandex.ru',
     'smtp_port' => 465,
     'smtp_user' => 'psy@lahtinka.ru',

@@ -80,7 +80,7 @@ export const site = {
     ['Отзыв согласия', 'Согласие можно отозвать письмом на psy@lahtinka.ru. Согласие на аналитику даётся отдельно в cookie-баннере и не является условием отправки заявки.']
   ]}
 };
-export const origin = (process.env.NEXT_PUBLIC_SITE_URL || 'https://psycholog.laht1nka.ru').replace(/\/$/, '');
+export const origin = (process.env.NEXT_PUBLIC_SITE_URL || 'https://laht1nka.ru').replace(/\/$/, '');
 
 
 

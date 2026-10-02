@@ -47,7 +47,7 @@ ssh-keygen -t ed25519 -C "github-beget-deploy" -f ./beget_deploy
 
 | Имя | Значение |
 |---|---|
-| `SITE_URL` | `https://psycholog.laht1nka.ru` или фактический основной HTTPS-домен |
+| `SITE_URL` | `https://laht1nka.ru` или фактический основной HTTPS-домен |
 | `BEGET_PORT` | `22`, если Beget не указал другой порт |
 | `BEGET_DEPLOY_ENABLED` | `true` после заполнения секретов и проверки пути |
 
@@ -55,7 +55,7 @@ ssh-keygen -t ed25519 -C "github-beget-deploy" -f ./beget_deploy
 
 ## После первой публикации
 
-На Beget появится `private/mail-config.php` рядом с `public_html`. Добавьте туда пароль приложения Яндекс.Почты и установите `enabled => true`. Отправитель и получатель — `psy@lahtinka.ru`. Убедитесь, что `site_url` совпадает с доменом. По умолчанию форма демонстрационная; отправка реальных писем без пароля не проверена.
+На Beget появится `private/mail-config.php` рядом с `public_html`. Добавьте туда пароль приложения Яндекс.Почты и установите `enabled => true`. Отправитель и получатель — `psy@lahtinka.ru`. Убедитесь, что `site_url` совпадает с доменом. В готовой сборке отправка включена, но до заполнения пароля обработчик возвращает not_configured. Реальная доставка требует проверки после настройки SMTP.
 
 При обновлениях сохраняются без изменений:
 
@@ -91,7 +91,7 @@ pnpm build
 pnpm package
 ```
 
-Готовые файлы: `dist/beget/public_html` и `dist/beget/private`. При ручной установке скопируйте `mail-config.example.php` в `mail-config.php` вне публичной папки. Для просмотра интерфейса используйте `pnpm dev`; PHP-форма требует PHP-сервера, маршрут `/api/booking.php` не обрабатывается Next dev.
+Готовые файлы: `dist/beget/public_html` и `dist/beget/private`. Сборка включает готовый `private/mail-config.php` без пароля. При первой ручной установке загрузите его рядом с `public_html` и укажите пароль приложения почты. При обновлениях сохраняйте существующий серверный `mail-config.php`. Для просмотра интерфейса используйте `pnpm dev`; PHP-форма требует PHP-сервера, маршрут `/api/booking.php` не обрабатывается Next dev.
 
 Контент — `content/site.js`, оформление — `css/site.css`, PHP — `server/public_html/api/booking.php`. Фотографии уже подготовлены в нескольких размерах. Сканы дипломов, адрес кабинета, ссылки MAX и прочие отсутствующие данные не выдуманы.
 
