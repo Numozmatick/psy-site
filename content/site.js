@@ -4,7 +4,7 @@ export const site = {
   role: 'Клинический психолог · Психолог-консультант', city: 'Ставрополь', district: '',
   phone: '+7 (988) 869-59-59', phoneHref: 'tel:+79888695959', email: 'psy@lahtinka.ru',
   whatsapp: 'https://wa.me/79888695959', telegram: 'https://t.me/lahtinka', max: 'https://max.ru/u/f9LHodD0cOLKCXkTUKEIh1LJ4xtWfcmDmgpWln5diZtkq-IcyhkD1iyI5qA',
-  messengers: { label: 'Выберите удобный мессенджер', toggle: 'Написать в мессенджер', whatsapp: 'WhatsApp', telegram: 'Telegram', max: 'MAX', email: 'Email' },
+  messengers: { draft: 'Здравствуйте, Юлия! Хочу записаться на консультацию.', label: 'Выберите удобный мессенджер', toggle: 'Написать в мессенджер', whatsapp: 'WhatsApp', telegram: 'Telegram', max: 'MAX', email: 'Email' },
   title: 'Юлия Лахтина — психолог в Ставрополе | Консультации онлайн и офлайн',
   description: 'Юлия Лахтина — психолог в Ставрополе. 10+ лет практики. Работа с тревогой и выгоранием. Онлайн и очно для взрослых. Первая консультация бесплатно. Запишитесь.',
   nav: [['Обо мне', '#about'], ['Консультации', '#services'], ['Как я работаю', '#process'], ['Отзывы', '#reviews']],

@@ -1,7 +1,12 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { site } from '@/content/site';
-const channels = () => ['whatsapp', 'telegram', 'max'].filter(key => site[key]).map(key => ({ key, href: site[key], label: site.messengers[key] }));
+const channels = () => ['whatsapp', 'telegram', 'max'].filter(key => site[key]).map(key => {
+  const url = new URL(site[key]);
+  // Only a generic greeting; never place booking form data in external URLs.
+  if (key === 'whatsapp' || key === 'telegram') url.searchParams.set('text', site.messengers.draft);
+  return { key, href: url.href, label: site.messengers[key] };
+});
 export function MessengerLinks({ className = 'messenger-links', includeEmail = false }) {
   return <div className={className} aria-label={site.messengers.label}>{channels().map(channel => <a key={channel.key} href={channel.href} target="_blank" rel="noopener noreferrer" data-event="messenger_click" data-location={channel.key}>{channel.label}</a>)}{includeEmail && <a href={`mailto:${site.email}`} aria-label={`${site.messengers.email}: ${site.email}`}>{site.messengers.email}</a>}</div>;
 }
