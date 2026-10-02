@@ -80,5 +80,15 @@ try {
     $mail->send();
     respond(['ok' => true, 'demo' => false]);
 } catch (Throwable $e) {
-    respond(['error' => 'delivery'], 502);
+    // Return only a fixed category, never raw SMTP replies, addresses or credentials.
+    $detail = strtolower($e->getMessage());
+    $reason = 'smtp';
+    if (str_contains($detail, 'authenticate')) $reason = 'authentication';
+    elseif (str_contains($detail, 'connect')) $reason = 'connection';
+    elseif (str_contains($detail, 'from address')) $reason = 'sender';
+    elseif (str_contains($detail, 'recipient')) $reason = 'recipient';
+    elseif (str_contains($detail, 'data not accepted')) $reason = 'rejected';
+    elseif ($e instanceof Error) $reason = 'server_runtime';
+    error_log('Booking mail failed: ' . $reason);
+    respond(['error' => 'delivery', 'reason' => $reason], 502);
 }
