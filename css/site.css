@@ -42,3 +42,15 @@ input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000p
 @media(max-width:359px){.shell{width:calc(100% - 28px)}.booking-form{padding:18px}.monogram{width:36px;height:36px}.brand{gap:8px;font-size:.85rem}.brand small{font-size:.65rem}.stats strong{font-size:2rem}.actions{gap:16px}.mobile-book{left:14px;width:calc(100% - 94px);padding-inline:12px}}
 @media(hover:none){.button:hover{transform:none;box-shadow:none}}
 @media(forced-colors:active){.button,.floating-contact{border:1px solid ButtonText}.will-reveal{opacity:1;transform:none}}
+/* A calm, legible portrait caption, including narrow iPhone screens. */
+.photo-caption .caption-copy{font-size:inherit;line-height:1.25;color:var(--ink);min-width:0}
+.caption-copy>span+span::before{content:' '}
+.photo-caption .caption-mark{flex-shrink:0}
+@media(max-width:767px){
+ .hero-visual{padding-bottom:0}
+ .photo-caption{position:relative;left:auto;right:auto;bottom:auto;width:calc(100% - 24px);margin:-28px auto 0;padding:18px 22px;border-radius:18px;gap:18px;transform:none;background:#fffdf8;box-shadow:0 8px 28px #293d3312}
+ .photo-caption .caption-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--sage);font-size:1.9rem}
+ .photo-caption .caption-copy{font-size:clamp(1.45rem,6vw,1.8rem);line-height:1.16;letter-spacing:0}
+ .caption-copy>span{display:block;white-space:nowrap}
+ .caption-copy>span+span::before{content:none}
+}

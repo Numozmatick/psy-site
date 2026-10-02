@@ -30,7 +30,7 @@ function length(string $value): int { return preg_match_all('/./us', $value, $un
 $name = value($raw, 'name');
 $phone = preg_replace('/\D/', '', value($raw, 'phone'));
 if (str_starts_with($phone, '8')) $phone = '7' . substr($phone, 1);
-$email = value($raw, 'email'); $time = value($raw, 'time'); $message = value($raw, 'message');
+$email = value($raw, 'email'); $time = value($raw, 'time'); $message = ''; // Free-text messages are intentionally not processed.
 $errors = [];
 if (length($name) < 2 || length($name) > 80 || preg_match('/[\r\n]/', $name)) $errors[] = 'name';
 if (!preg_match('/^7\d{10}$/D', $phone)) $errors[] = 'phone';
@@ -85,7 +85,7 @@ try {
     if ($email !== '') $mail->addReplyTo($email);
     $mail->Subject = 'Новая заявка на консультацию с сайта';
     $mail->isHTML(false);
-    $mail->Body = "Имя: $name\nТелефон: +$phone\nEmail: " . ($email ?: 'не указан') . "\nУдобное время: " . ($time ?: 'не указано') . "\nСообщение: " . ($message ?: 'не указано') . "\n\nСогласие: да\nВерсия согласия: 2026-09-30\nВремя (UTC): " . gmdate('c');
+    $mail->Body = "Имя: $name\nТелефон: +$phone\nEmail: " . ($email ?: 'не указан') . "\nУдобное время: " . ($time ?: 'не указано') . "\n\nСогласие: да\nВерсия согласия: 2026-10-03\nВремя (UTC): " . gmdate('c');
     $mail->send();
     respond(['ok' => true, 'demo' => false]);
 } catch (Throwable $e) {

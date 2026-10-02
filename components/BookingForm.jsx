@@ -29,7 +29,7 @@ export function BookingForm() {
     {field('name', f.name, 'text', f.namePlaceholder)}
     <div className="form-row">{field('phone', f.phone, 'tel', f.phonePlaceholder)}{field('email', f.email, 'email', 'you@example.com', true)}</div>
     {field('time', f.time, 'text', f.timePlaceholder, true)}
-    <div className="field"><label htmlFor="message">{f.message}<span> · {f.optional}</span></label><textarea id="message" name="message" className="ym-disable-keys" maxLength={1000} placeholder={f.messagePlaceholder} aria-describedby="message-note"/><span id="message-note" className="form-note">{f.sensitive}</span></div>
+    <p className="form-note">{f.sensitive}</p>
     <label className="consent-row"><input type="checkbox" name="consent" required aria-invalid={!!errors.consent} aria-describedby={errors.consent ? 'consent-error' : undefined}/><span>{f.consent}</span></label>
     {errors.consent && <p id="consent-error" className="field-error">{f.validation.consent}</p>}
     <div className="form-links"><a href="/consent" target="_blank" rel="noopener">{f.consentLink}</a><a href="/privacy" target="_blank" rel="noopener">{f.privacyLink}</a></div>
