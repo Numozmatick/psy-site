@@ -1,0 +1,11 @@
+# Улучшение фотографий
+
+Использован встроенный imagegen (режим редактирования), не CLI. Исходные снимки сохранены как `julia-garden.webp` и `julia-window.webp`; улучшенные версии — `julia-garden-enhanced.webp` и `julia-window-enhanced.webp`. AI-реставрация повышает визуальную детализацию, но не восстанавливает документально точные утраченные пиксели. Исходники доступны для сравнения.
+
+## Промпт 1 — сад
+
+Use case: identity-preserve. Edit target: the supplied photograph of a woman in a straw hat standing in a garden. Improve only photographic quality for her professional psychologist website. Carefully recover natural detail, reduce JPEG artifacts, subtly lift exposure in the shaded face beneath the hat, balance highlights and shadows, gentle natural color correction. Preserve EXACT identity, facial structure, apparent age, expression, skin texture, hair, body proportions, pose, all clothing, straw hat, plants and background, camera framing and square aspect ratio. Do not beautify or restyle. Do not change facial features or invent a different smile. Do not add objects, remove objects, retouch away natural skin features, add text or watermarks. Keep recognizably the exact same photograph, clean natural photographic restoration, not a newly imagined portrait. Output high-resolution square image, 1536px or larger if possible.
+
+## Промпт 2 — у окна
+
+Use case: identity-preserve. Edit target: the supplied photograph of a woman holding a white rabbit beside a bright window. Improve only photographic quality for her professional psychologist website. Recover natural fine details, reduce JPEG artifacts, gently improve clarity without oversharpening, balance window highlights and face exposure with natural soft light. Preserve EXACT identity, facial structure and profile, apparent age, expression, skin texture, hair color and hairstyle, body proportions, hands and fingers, pose, clothing, smartwatch, rabbit and all its features, flowers, window and entire background, camera framing and square aspect ratio. Do not beautify, reshape, restyle, or invent anything. Keep recognizably the same photograph. No text, watermarks or added objects. Clean natural photographic restoration. Output high-resolution square image, 1536px or larger if possible.

@@ -1,0 +1,90 @@
+name: Build and deploy to Beget
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || 'https://psycholog.laht1nka.ru' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+      - name: Enable pnpm
+        run: corepack enable && corepack prepare pnpm@11.25.0 --activate
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm build
+      - run: pnpm package
+      - name: Check PHP syntax
+        run: find dist/beget -name '*.php' -print0 | xargs -0 -n1 php -l
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: beget-site
+          path: dist/beget/
+          include-hidden-files: true
+          retention-days: 14
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request' && vars.BEGET_DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    concurrency:
+      group: beget-production
+      cancel-in-progress: false
+    env:
+      BEGET_HOST: ${{ secrets.BEGET_HOST }}
+      BEGET_USER: ${{ secrets.BEGET_USER }}
+      BEGET_PORT: ${{ vars.BEGET_PORT || '22' }}
+      BEGET_SITE_DIR: ${{ secrets.BEGET_SITE_DIR }}
+      SITE_URL: ${{ vars.SITE_URL || 'https://psycholog.laht1nka.ru' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: beget-site
+          path: dist/beget
+      - name: Install SSH identity and trusted host key
+        env:
+          BEGET_SSH_KEY: ${{ secrets.BEGET_SSH_KEY }}
+          BEGET_KNOWN_HOSTS: ${{ secrets.BEGET_KNOWN_HOSTS }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ -n "$BEGET_SSH_KEY" && -n "$BEGET_KNOWN_HOSTS" ]] || { echo 'SSH secrets are missing'; exit 1; }
+          umask 077
+          printf '%s\n' "$BEGET_SSH_KEY" > "$RUNNER_TEMP/beget_key"
+          printf '%s\n' "$BEGET_KNOWN_HOSTS" > "$RUNNER_TEMP/beget_known_hosts"
+      - name: Upload, back up and publish
+        run: bash scripts/deploy.sh
+      - name: Verify deployed revision over HTTPS
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SITE_URL" == https://* ]] || { echo 'SITE_URL must use HTTPS'; exit 1; }
+          actual=$(curl --fail --silent --show-error --retry 3 --max-time 30 "${SITE_URL%/}/deploy-version.txt?revision=$GITHUB_SHA")
+          [[ "$actual" == "$GITHUB_SHA" ]] || { echo 'Deployment revision mismatch; check domain mapping/cache.'; exit 1; }
+          curl --fail --silent --show-error --max-time 30 "${SITE_URL%/}/" -o /dev/null
+          curl --fail --silent --show-error --max-time 30 "${SITE_URL%/}/privacy/" -o /dev/null
+      - name: Remove runner credentials
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/beget_key" "$RUNNER_TEMP/beget_known_hosts"
+
+

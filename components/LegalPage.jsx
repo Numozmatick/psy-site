@@ -1,0 +1,2 @@
+import { site } from '@/content/site';
+export function LegalPage({ kind }) { return <main id="main" className="shell legal-page"><a href="/">{site.legal.back}</a><h1>{kind === 'privacy' ? site.legal.privacyTitle : site.legal.consentTitle}</h1><aside className="legal-draft">{site.legal.draft}</aside><p>{site.legal.details}</p>{site.legal[kind].map(([title, text]) => <section key={title}><h2>{title}</h2><p>{text}</p></section>)}</main>; }

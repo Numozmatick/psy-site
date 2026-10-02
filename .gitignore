@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+dist/
+.env*
+!.env.example
+server/private/mail-config.php
+**/storage/
+*.pem
+*.key
+id_ed25519*
+*.log
