@@ -57,3 +57,8 @@ input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000p
 /* Vector leaf avoids platform-dependent emoji rendering on iOS. */
 .photo-caption .caption-mark{display:grid;place-items:center;width:42px;height:42px;flex:0 0 42px;line-height:1;color:var(--green)}
 .caption-mark svg{display:block;width:28px;height:28px;overflow:visible}
+/* Accessibility improvements only affect keyboard/high-contrast preferences. */
+.reveal:focus-within{opacity:1;transform:none}
+:where(a,button,input,textarea,summary){scroll-margin-block:100px}
+@media(prefers-contrast:more){:root{--line:#737f73;--muted:#37473d}:focus-visible{outline-width:4px}}
+@media(forced-colors:active){:focus-visible{outline:3px solid Highlight}.caption-mark svg{stroke:CanvasText}}

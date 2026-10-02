@@ -4,7 +4,7 @@ import { site } from '@/content/site';
 import { track } from '@/js/analytics';
 export function Header() {
   const [open, setOpen] = useState(false);
-  useEffect(() => { const fn = e => { if (e.key === 'Escape') setOpen(false); }; document.addEventListener('keydown', fn); return () => document.removeEventListener('keydown', fn); }, []);
+  useEffect(() => { const fn = e => { if (e.key === 'Escape') { setOpen(false); if (document.activeElement?.closest('#navigation')) document.querySelector('.menu-toggle')?.focus(); } }; document.addEventListener('keydown', fn); return () => document.removeEventListener('keydown', fn); }, []);
   return <header className="header shell"><a className="brand" href="#" onClick={() => setOpen(false)}><span className="monogram">{site.initials}</span><span>{site.name}<small>КЛИНИЧЕСКИЙ ПСИХОЛОГ</small></span></a><button className="menu-toggle" aria-expanded={open} aria-controls="navigation" aria-label={open ? site.menuClose : site.menuOpen} onClick={() => setOpen(!open)}>{open ? '×' : '☰'}</button><nav id="navigation" className={open ? 'navigation open' : 'navigation'} aria-label="Основная навигация">{site.nav.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>)}<a className="nav-cta" href="#contact" data-event="cta_click" data-location="header" onClick={() => setOpen(false)}>{site.mobileBook}</a></nav></header>;
 }
 export function Reviews() {
