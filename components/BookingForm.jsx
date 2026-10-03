@@ -11,14 +11,16 @@ export function BookingForm() {
     const checked = validateBooking(raw); setErrors(checked.errors); setStatus('');
     if (!checked.valid) { setStatus(f.invalid); ref.current.elements[Object.keys(checked.errors)[0]]?.focus(); return; }
     setBusy(true);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
     try {
-      const response = await fetch('/api/booking.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(raw), signal: AbortSignal.timeout(20000) });
+      const response = await fetch('/api/booking.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(raw), signal: controller.signal });
       const result = await response.json();
-      if (!response.ok) throw new Error('request failed');
+      if (!response.ok) { setStatus(f.serverErrors[result.error] || f.error); return; }
       setStatus(result.demo ? f.demo : f.success);
       // A demo submission is not counted as a lead.
       if (!result.demo) { track('form_submit', { form_id: 'booking' }); ref.current.reset(); setPhone(''); }
-    } catch { setStatus(f.error); } finally { setBusy(false); }
+    } catch { setStatus(f.error); } finally { clearTimeout(timeout); setBusy(false); }
   }
   function field(name, label, type = 'text', placeholder = '', optional = false) {
     return <div className="field"><label htmlFor={name}>{label}{optional && <span> · {f.optional}</span>}</label><input id={name} name={name} aria-required={!optional} type={type} required={!optional} placeholder={placeholder} maxLength={name === 'name' ? 80 : name === 'email' ? 254 : name === 'time' ? 120 : 18} autoComplete={name === 'name' ? 'name' : name === 'phone' ? 'tel' : name === 'email' ? 'email' : 'off'} inputMode={name === 'phone' ? 'tel' : undefined} className="ym-disable-keys" aria-invalid={!!errors[name]} aria-describedby={errors[name] ? `${name}-error` : undefined} {...(name === 'phone' ? { value: phone, onChange: e => setPhone(maskPhone(e.target.value)) } : {})} />{errors[name] && <span id={`${name}-error`} className="field-error">{f.validation[name]}</span>}</div>;

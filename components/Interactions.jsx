@@ -4,6 +4,14 @@ import { site } from '@/content/site';
 import { track } from '@/js/analytics';
 export function Header() {
   const [open, setOpen] = useState(false);
+  // Beget can serve static HTML through nginx before Apache redirect rules run.
+  useEffect(() => {
+    if (location.hostname === 'psycholog.laht1nka.ru') {
+      const canonical = new URL(location.href);
+      canonical.hostname = 'laht1nka.ru'; canonical.protocol = 'https:'; canonical.port = '';
+      location.replace(canonical.href);
+    }
+  }, []);
   useEffect(() => { const fn = e => { if (e.key === 'Escape') { setOpen(false); if (document.activeElement?.closest('#navigation')) document.querySelector('.menu-toggle')?.focus(); } }; document.addEventListener('keydown', fn); return () => document.removeEventListener('keydown', fn); }, []);
   return <header className="header shell"><a className="brand" href="#" onClick={() => setOpen(false)}><span className="monogram">{site.initials}</span><span>{site.name}<small>КЛИНИЧЕСКИЙ ПСИХОЛОГ</small></span></a><button className="menu-toggle" aria-expanded={open} aria-controls="navigation" aria-label={open ? site.menuClose : site.menuOpen} onClick={() => setOpen(!open)}>{open ? '×' : '☰'}</button><nav id="navigation" className={open ? 'navigation open' : 'navigation'} aria-label="Основная навигация">{site.nav.map(([label, href]) => <a key={href} href={href} onClick={() => setOpen(false)}>{label}</a>)}<a className="nav-cta" href="#contact" data-event="cta_click" data-location="header" onClick={() => setOpen(false)}>{site.mobileBook}</a></nav></header>;
 }
