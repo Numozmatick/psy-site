@@ -62,3 +62,10 @@ input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000p
 :where(a,button,input,textarea,summary){scroll-margin-block:100px}
 @media(prefers-contrast:more){:root{--line:#737f73;--muted:#37473d}:focus-visible{outline-width:4px}}
 @media(forced-colors:active){:focus-visible{outline:3px solid Highlight}.caption-mark svg{stroke:CanvasText}}
+/* Dedicated IT burnout section, using the existing palette and type scale. */
+.burnout{padding-top:0}
+.burnout-card{display:grid;gap:32px;padding:28px;border:1px solid var(--line);border-radius:var(--radius);background:var(--rose)}
+.burnout-card>div{min-width:0}.burnout-card p:not(.eyebrow){color:var(--muted)}
+.burnout-list{margin:0 0 24px;padding-left:22px}.burnout-list li{padding-left:5px}.burnout-list li+li{margin-top:12px}.burnout-list li::marker{color:var(--green)}
+.burnout-action{margin-top:24px}.burnout-action .note{margin-top:12px;max-width:370px}
+@media(min-width:768px){.burnout-card{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;padding:40px}.burnout-card h2{font-size:clamp(2.5rem,3.6vw,3.5rem)}}

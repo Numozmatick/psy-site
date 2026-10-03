@@ -49,6 +49,12 @@ export default function Home() {
           <h3 className="small-title">{site.about.topicsTitle}</h3><ul className="tags">{site.about.topics.map(t => <li key={t}>{t}</li>)}</ul>
         </div>
       </section>
+      <section id="burnout" aria-labelledby="burnout-title" className="section shell burnout">
+        <div className="burnout-card reveal">
+          <div><p className="eyebrow">{site.burnout.eyebrow}</p><h2 id="burnout-title">{site.burnout.title}</h2><p>{site.burnout.text}</p></div>
+          <div><ul className="burnout-list">{site.burnout.items.map(item => <li key={item}>{item}</li>)}</ul><p>{site.burnout.closing}</p><div className="burnout-action">{cta(site.burnout.cta, 'burnout')}<p className="note">{site.burnout.note}</p></div></div>
+        </div>
+      </section>
       <section id="services" aria-labelledby="services-title" className="section services"><div className="shell">
         <div className="section-heading reveal"><div><p className="eyebrow">{site.services.eyebrow}</p><h2 id="services-title">{site.services.title}</h2></div><p>{site.services.text}</p></div>
         <div className="service-grid">{site.services.items.map(s => <article key={s.number} className={`service-card reveal ${s.available ? '' : 'inquire'}`}><div className="card-top"><span>{s.tag}</span><span className="number">{s.number}</span></div><h3>{s.title}</h3><p>{s.text}</p><div className="service-meta"><span>{s.duration}</span><strong>{s.price}</strong></div>{cta(s.available ? site.services.cta : site.services.inquire, `service_${s.number}`, 'service-link', (s.available ? site.services.cta : site.services.inquire) + ': ' + s.title)}</article>)}</div><p className="note">{site.services.priceNote}</p>
