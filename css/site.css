@@ -77,3 +77,5 @@ input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000p
 .caption-copy>span{white-space:normal}
 .button,.nav-cta{max-width:100%;white-space:normal;overflow-wrap:anywhere}
 @media(max-width:479px){.burnout-card{padding:24px}.hero h1{font-size:clamp(1.875rem,8.2vw,2.45rem)}}
+/* Keep consent settings clear of the floating messenger button on desktop. */
+@media(min-width:768px){.footer-bottom>div{padding-right:72px}}
