@@ -4,28 +4,29 @@ import { site } from '@/content/site';
 import { maskPhone, validateBooking } from '@/js/validation.mjs';
 import { track } from '@/js/analytics';
 export function BookingForm() {
+  const started = useRef(false);
   const f = site.form, ref = useRef(null), [errors, setErrors] = useState({}), [status, setStatus] = useState(''), [busy, setBusy] = useState(false), [phone, setPhone] = useState('');
   async function submit(e) {
     e.preventDefault(); if (busy) return;
     const raw = Object.fromEntries(new FormData(e.currentTarget)); raw.consent = raw.consent === 'on';
     const checked = validateBooking(raw); setErrors(checked.errors); setStatus('');
-    if (!checked.valid) { setStatus(f.invalid); ref.current.elements[Object.keys(checked.errors)[0]]?.focus(); return; }
+    if (!checked.valid) { track('form_error', { form_id: 'booking', error_type: 'validation' }); setStatus(f.invalid); ref.current.elements[Object.keys(checked.errors)[0]]?.focus(); return; }
     setBusy(true);
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 20000);
     try {
       const response = await fetch('/api/booking.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(raw), signal: controller.signal });
       const result = await response.json();
-      if (!response.ok) { setStatus(f.serverErrors[result.error] || f.error); return; }
+      if (!response.ok) { track('form_error', { form_id: 'booking', error_type: ['validation', 'rate_limit', 'delivery'].includes(result.error) ? result.error : 'server' }); setStatus(f.serverErrors[result.error] || f.error); return; }
       setStatus(result.demo ? f.demo : f.success);
       // A demo submission is not counted as a lead.
       if (!result.demo) { track('form_submit', { form_id: 'booking' }); ref.current.reset(); setPhone(''); }
-    } catch { setStatus(f.error); } finally { clearTimeout(timeout); setBusy(false); }
+    } catch { track('form_error', { form_id: 'booking', error_type: 'network' }); setStatus(f.error); } finally { clearTimeout(timeout); setBusy(false); }
   }
   function field(name, label, type = 'text', placeholder = '', optional = false) {
     return <div className="field"><label htmlFor={name}>{label}{optional && <span> · {f.optional}</span>}</label><input id={name} name={name} aria-required={!optional} type={type} required={!optional} placeholder={placeholder} maxLength={name === 'name' ? 80 : name === 'email' ? 254 : name === 'time' ? 120 : 18} autoComplete={name === 'name' ? 'name' : name === 'phone' ? 'tel' : name === 'email' ? 'email' : 'off'} inputMode={name === 'phone' ? 'tel' : undefined} className="ym-disable-keys" aria-invalid={!!errors[name]} aria-describedby={errors[name] ? `${name}-error` : undefined} {...(name === 'phone' ? { value: phone, onChange: e => setPhone(maskPhone(e.target.value)) } : {})} />{errors[name] && <span id={`${name}-error`} className="field-error">{f.validation[name]}</span>}</div>;
   }
-  return <form ref={ref} onSubmit={submit} noValidate className="booking-form ym-hide-content" aria-labelledby="form-title" aria-busy={busy}>
+  return <form ref={ref} onInput={() => { if (!started.current) { started.current = true; track('form_start', { form_id: 'booking' }); } }} onSubmit={submit} noValidate className="booking-form ym-hide-content" aria-labelledby="form-title" aria-busy={busy}>
     <h3 id="form-title">{f.title}</h3>
     <div className="trap" aria-hidden="true"><label htmlFor="website">{f.honeypot}</label><input id="website" name="website" autoComplete="off" tabIndex={-1}/></div>
     {field('name', f.name, 'text', f.namePlaceholder)}

@@ -36,14 +36,14 @@ export default function Home() {
           <p className="availability"><span />{site.hero.availability}</p>
         </div>
         <div className="hero-visual">
-          <div className="photo-frame"><Image src="/images/julia-garden-enhanced.webp" alt={site.hero.imageAlt} width={1254} height={1254} priority sizes="(max-width: 767px) 92vw, 44vw" quality={80} /></div>
+          <div className="photo-frame"><Image src="/images/julia-garden-enhanced.webp" alt={site.hero.imageAlt} width={1254} height={1254} priority sizes="(max-width: 479px) calc(100vw - 56px), (max-width: 767px) calc(100vw - 72px), (max-width: 1023px) 43vw, (max-width: 1439px) 40vw, 512px" quality={80} /></div>
           <div className="photo-caption"><span className="caption-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" focusable="false"><path d="M9 25c0-8 5-14 14-18"/><path d="M10 20C3 10 13 5 25 5c0 12-5 20-15 15Z"/></svg></span><span className="caption-copy">{site.hero.captionLines.map(line => <span key={line}>{line}</span>)}</span></div>
           <span className="photo-index" aria-hidden="true">ПРОСТРАНСТВО БЕРЕЖНЫХ ПЕРЕМЕН</span>
         </div>
       </section>
       <div className="stats shell">{site.hero.stats.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}<p>{site.contact.location}<br />{site.contact.availability}</p></div>
       <section id="about" aria-labelledby="about-title" className="section shell about">
-        <div className="about-visual reveal"><Image src="/images/julia-window-enhanced.webp" alt={site.about.imageAlt} width={1254} height={1254} sizes="(max-width: 767px) 92vw, 36vw" quality={80} /><blockquote>{site.about.quote}</blockquote></div>
+        <div className="about-visual reveal"><Image src="/images/julia-window-enhanced.webp" alt={site.about.imageAlt} width={1254} height={1254} sizes="(max-width: 479px) calc(100vw - 40px), (max-width: 767px) calc(100vw - 56px), (max-width: 1439px) 39vw, 540px" quality={80} /><blockquote>{site.about.quote}</blockquote></div>
         <div className="reveal"><p className="eyebrow">{site.about.eyebrow}</p><h2 id="about-title">{site.about.title}</h2><p className="lead">{site.about.intro}</p>{site.about.paragraphs.map(p => <p key={p}>{p}</p>)}
           <details className="education"><summary>{site.about.educationTitle}</summary><ul>{site.about.education.map(item => <li key={item}>{item}</li>)}</ul><p>{site.about.credentialsNote}</p></details>
           <h3 className="small-title">{site.about.topicsTitle}</h3><ul className="tags">{site.about.topics.map(t => <li key={t}>{t}</li>)}</ul>
