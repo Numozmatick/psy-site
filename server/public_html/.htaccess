@@ -12,6 +12,7 @@ ErrorDocument 404 /404.html
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/webp "access plus 7 days"
+  ExpiresByType image/avif "access plus 7 days"
   ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
 <IfModule mod_headers.c>
