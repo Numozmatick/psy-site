@@ -69,3 +69,11 @@ input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000p
 .burnout-list{margin:0 0 24px;padding-left:22px}.burnout-list li{padding-left:5px}.burnout-list li+li{margin-top:12px}.burnout-list li::marker{color:var(--green)}
 .burnout-action{margin-top:24px}.burnout-action .note{margin-top:12px;max-width:370px}
 @media(min-width:768px){.burnout-card{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px;padding:40px}.burnout-card h2{font-size:clamp(2.5rem,3.6vw,3.5rem)}}
+/* Clear hero typography without a synthetic italic or cramped line spacing. */
+.hero h1{font-family:var(--font-sans),Arial,sans-serif;font-size:clamp(2rem,4.1vw,3.75rem);font-weight:600;line-height:1.18;letter-spacing:-.035em;overflow-wrap:normal}
+.hero h1 em{font-style:normal;font-weight:inherit}
+/* Let long text reflow inside cards when text size is increased. */
+.burnout-card h2{font-size:clamp(2rem,3.6vw,3.5rem);line-height:1.12;overflow-wrap:anywhere}
+.caption-copy>span{white-space:normal}
+.button,.nav-cta{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+@media(max-width:479px){.burnout-card{padding:24px}.hero h1{font-size:clamp(1.875rem,8.2vw,2.45rem)}}
