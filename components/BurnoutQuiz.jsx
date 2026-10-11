@@ -13,7 +13,7 @@ export function BurnoutQuiz() {
   function start() { setAnswers([]); setStep(0); track('quiz_start'); }
   function next() { if (answers[step] == null) return; if (step === total - 1) track('quiz_complete'); setStep(step + 1); }
   return <section id="burnout-test" className="section shell" aria-labelledby="quiz-title">
-    <div className="quiz-card ym-hide-content"><h2 id="quiz-title">{copy.title}</h2><p className="note">{copy.disclaimer}</p>
+    <div className="quiz-card ym-hide-content"><h2 id="quiz-title">{copy.title}</h2>
       {step === -1 ? <><p>{copy.intro}</p><p className="note">{copy.privacy}</p><button type="button" className="button" onClick={start}>{copy.start}</button></> : complete ? <>
         <h3 ref={heading} tabIndex={-1}>{copy.resultTitle}</h3><p className="lead">{frequent.length ? copy.resultSummary.replace('{count}', frequent.length).replace('{total}', total) : copy.empty}</p>
         {frequent.length > 0 && <details className="quiz-details"><summary>{copy.details}</summary><ul>{frequent.map(q => <li key={q}>{q}</li>)}</ul></details>}
