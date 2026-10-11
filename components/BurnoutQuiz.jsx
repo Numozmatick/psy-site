@@ -7,7 +7,7 @@ export function BurnoutQuiz() {
   const [answers, setAnswers] = useState([]);
   const heading = useRef(null);
   const total = copy.questions.length;
-  useEffect(() => { if (step >= 0) heading.current?.focus(); }, [step]);
+  useEffect(() => { if (step >= 0) heading.current?.focus({ preventScroll: true }); }, [step]);
   const complete = step === total;
   const frequent = copy.questions.filter((_, index) => answers[index] >= 3);
   function start() { setAnswers([]); setStep(0); track('quiz_start'); }
@@ -21,7 +21,7 @@ export function BurnoutQuiz() {
       </> : <>
         <p className="note" aria-live="polite">{copy.progress} {step + 1} {copy.of} {total}</p>
         <progress value={step + 1} max={total} aria-label={copy.progress} />
-        <h3 ref={heading} tabIndex={-1} id="quiz-question">{copy.questions[step]}</h3>
+        <div className="quiz-question-slot"><h3 ref={heading} tabIndex={-1} id="quiz-question">{copy.questions[step]}</h3><div className="quiz-question-sizing" aria-hidden="true">{copy.questions.map(question => <span key={question}>{question}</span>)}</div></div>
         <fieldset key={step} className="quiz-options" aria-labelledby="quiz-question"><legend className="quiz-visually-hidden">{copy.questions[step]}</legend>{copy.options.map((option, value) => <label key={value} className={answers[step] === value ? 'quiz-selected' : ''}><input type="radio" value={value} name={'quiz-answer-' + step} checked={answers[step] === value} onChange={() => setAnswers(current => { const updated = [...current]; updated[step] = value; return updated; })} />{option}</label>)}</fieldset>
         <div className="actions"><button className="button secondary" disabled={step === 0} onClick={() => setStep(step - 1)}>{copy.back}</button><button className="button" disabled={answers[step] == null} onClick={next}>{step === total - 1 ? copy.finish : copy.next}</button></div>
       </>}
