@@ -8,8 +8,8 @@ import { MessengerLinks, FloatingMessengers } from '@/components/Messengers';
 export function generateMetadata() {
   return { title: site.title, description: site.description, alternates: { canonical: '/' },
     robots: { index: true, follow: true, googleBot: { index: true, follow: true, 'max-image-preview': 'large' } },
-    openGraph: { type: 'website', locale: 'ru_RU', url: origin, title: site.title, description: site.description, siteName: site.name, images: [{ url: '/images/julia-garden-enhanced.webp', width: 1254, height: 1254, alt: site.hero.imageAlt }] },
-    twitter: { card: 'summary_large_image', title: site.title, description: site.description, images: ['/images/julia-garden-enhanced.webp'] }
+    openGraph: { type: 'website', locale: 'ru_RU', url: origin, title: site.share.title, description: site.share.description, siteName: site.name, images: [{ url: '/images/julia-garden-enhanced.webp', width: 1254, height: 1254, alt: site.hero.imageAlt }] },
+    twitter: { card: 'summary_large_image', title: site.share.title, description: site.share.description, images: ['/images/julia-garden-enhanced.webp'] }
   };
 }
 const cta = (label, location, className = 'button', accessibleLabel) => <a aria-label={accessibleLabel} className={className} href="#contact" data-event="cta_click" data-location={location}>{label}</a>;
@@ -66,7 +66,7 @@ export default function Home() {
       <section id="reviews" aria-labelledby="reviews-title" className="section reviews"><div className="shell review-layout"><div><p className="eyebrow">{site.reviews.eyebrow}</p><h2 id="reviews-title">{site.reviews.title}</h2><p className="note">{site.reviews.note}</p></div><Reviews /></div></section>
       <section id="faq" aria-labelledby="faq-title" className="section shell faq-layout"><div><p className="eyebrow">{site.faq.eyebrow}</p><h2 id="faq-title">{site.faq.title}</h2></div><FAQ /></section>
       <section id="referral" aria-labelledby="referral-title" className="section shell">
-        <div className="referral-card"><p className="eyebrow">{site.referral.eyebrow}</p><h2 id="referral-title">{site.referral.title}</h2><p>{site.referral.text}</p><ol>{site.referral.steps.map(step => <li key={step}>{step}</li>)}</ol><p className="note">{site.referral.note}</p>{cta(site.referral.cta, 'referral', 'button secondary')}</div>
+        <div className="referral-card"><p className="eyebrow">{site.referral.eyebrow}</p><h2 id="referral-title">{site.referral.title}</h2><p>{site.referral.text}</p><ol>{site.referral.steps.map(step => <li key={step}>{step}</li>)}</ol><p className="note">{site.referral.note}</p><div className="actions"><a className="button" href={'https://t.me/share/url?url=' + encodeURIComponent(origin) + '&text=' + encodeURIComponent(site.share.text)} target="_blank" rel="noopener noreferrer" data-event="cta_click" data-location="referral_share">{site.share.button}</a>{cta(site.referral.cta, 'referral', 'button secondary')}</div><p className="note">{site.share.hint}</p></div>
       </section>
       <section id="contact" aria-labelledby="contact-title" className="section contact"><div className="shell contact-layout"><div className="reveal"><p className="eyebrow">{site.contact.eyebrow}</p><h2 id="contact-title">{site.contact.title}</h2><p>{site.contact.text}</p><a className="contact-phone" href={site.phoneHref} data-event="phone_click">{site.phone}</a><div className="contact-location"><strong>{site.contact.location}</strong><span>{site.contact.address}</span>{site.district && <span>{site.district}</span>}</div><MessengerLinks includeEmail /></div><BookingForm /></div></section>
     </main>
