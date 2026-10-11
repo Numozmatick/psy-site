@@ -91,4 +91,3 @@ input:-webkit-autofill{-webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000p
 .quiz-card{overflow-anchor:none}.quiz-question-slot{display:grid;margin:24px 0 18px}.quiz-question-slot>#quiz-question,.quiz-question-sizing{grid-area:1/1;margin:0}.quiz-question-sizing{display:grid;visibility:hidden;pointer-events:none;font-size:1.2rem;font-weight:500;line-height:1.35}.quiz-question-sizing>span{grid-area:1/1}
 .quiz-options+.actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.quiz-options+.actions .button{min-height:76px;padding:12px;overflow-wrap:anywhere}
 
-.referral-card .actions{margin-top:24px}.referral-card .actions .button{margin-top:0}.referral-card .actions+p{margin-top:16px}
