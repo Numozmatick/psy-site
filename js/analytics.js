@@ -4,7 +4,7 @@ export function readConsent() {
   try { const value = JSON.parse(localStorage.getItem(CONSENT_KEY)); return value && value.expires > Date.now() ? value.choice : null; } catch { return null; }
 }
 // Only explicit allow-listed, non-identifying events and parameters are sent.
-const events = new Set(['cta_click', 'form_start', 'form_error', 'form_submit', 'email_click', 'faq_open', 'scroll_depth', 'phone_click', 'messenger_click']);
+const events = new Set(['quiz_start', 'quiz_complete', 'quiz_booking_click', 'cta_click', 'form_start', 'form_error', 'form_submit', 'email_click', 'faq_open', 'scroll_depth', 'phone_click', 'messenger_click']);
 export function track(name, params = {}) {
   if (typeof window === 'undefined' || readConsent() !== 'accepted' || !events.has(name)) return;
   const safe = Object.fromEntries(Object.entries(params).filter(([key]) => ['location', 'question_id', 'percent', 'form_id'].includes(key)));
